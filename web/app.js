@@ -216,13 +216,13 @@ function renderPipeline(stats) {
   const { ctx, width, height } = setupCanvas(elements.pipelineCanvas);
   ctx.clearRect(0, 0, width, height);
   const stages = ["Fetch", "Decode", "Rename", "Issue", "Execute", "Commit"];
-  const colors = ["#a8b7c7", "#64d7d2", "#f6b44b", "#b4f06b", "#ef6a55", "#f2f0dd"];
+  const colors = ["#aeb8c3", "#20b8ad", "#f2a620", "#b8ff5c", "#e8533f", "#fffaf0"];
   const pad = width < 720 ? 18 : 34;
   const usable = width - pad * 2;
   const boxW = usable / stages.length - 10;
   const midY = height * 0.48;
 
-  ctx.strokeStyle = "rgba(242,240,221,0.2)";
+  ctx.strokeStyle = "rgba(255,250,240,0.24)";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(pad, midY);
@@ -232,7 +232,7 @@ function renderPipeline(stats) {
   stages.forEach((stage, index) => {
     const x = pad + index * (boxW + 10);
     const pulse = Math.sin(Date.now() / 450 + index) * 5;
-    ctx.fillStyle = "rgba(11,12,9,0.76)";
+    ctx.fillStyle = "rgba(255,250,240,0.055)";
     ctx.strokeStyle = colors[index];
     ctx.lineWidth = 1.5;
     roundRect(ctx, x, midY - 48 + pulse, boxW, 94, 8);
@@ -241,14 +241,14 @@ function renderPipeline(stats) {
     ctx.fillStyle = colors[index];
     ctx.font = "700 12px Avenir Next, Segoe UI, sans-serif";
     ctx.fillText(stage.toUpperCase(), x + 14, midY - 18 + pulse);
-    ctx.fillStyle = "#f2f0dd";
+    ctx.fillStyle = "#fffaf0";
     ctx.font = "700 26px Georgia, serif";
     const value = index < 3 ? stats.committed : index === 3 ? stats.rsMax : index === 4 ? stats.robMax : stats.committed;
     ctx.fillText(String(value), x + 14, midY + 20 + pulse);
   });
 
   const textY = Math.max(34, height - 44);
-  ctx.fillStyle = "#9da08d";
+  ctx.fillStyle = "rgba(255,250,240,0.62)";
   ctx.font = "700 12px Avenir Next, Segoe UI, sans-serif";
   ctx.fillText("Cycle-stepped frontend, rename, issue, execute, and in-order commit", pad, textY);
 }
@@ -287,18 +287,18 @@ function drawBars(ctx, width, height, rows, label) {
   const barH = 34;
   const gap = 28;
   const maxW = width - left - 34;
-  ctx.fillStyle = "#9da08d";
+  ctx.fillStyle = "#697061";
   ctx.font = "700 12px Avenir Next, Segoe UI, sans-serif";
   ctx.fillText(label.toUpperCase(), left, 14);
   rows.forEach(([name, value, color], index) => {
     const y = top + index * (barH + gap);
-    ctx.fillStyle = "rgba(242,240,221,0.08)";
+    ctx.fillStyle = "rgba(20,23,17,0.08)";
     roundRect(ctx, left, y, maxW, barH, 5);
     ctx.fill();
     ctx.fillStyle = color;
     roundRect(ctx, left, y, maxW * value, barH, 5);
     ctx.fill();
-    ctx.fillStyle = "#f2f0dd";
+    ctx.fillStyle = "#141711";
     ctx.font = "800 13px Avenir Next, Segoe UI, sans-serif";
     ctx.fillText(name, 8, y + 22);
     ctx.fillText(percent(value), left + maxW - 58, y + 22);

@@ -8,24 +8,55 @@
   </head>
   <body>
     <main class="shell">
-      <header class="topbar" aria-label="Simulator overview">
-        <div>
-          <p class="eyebrow">RV32I out-of-order simulator</p>
-          <h1>Cycle-accurate CPU lab</h1>
-        </div>
-        <div class="topbar__actions">
-          <a class="button button--ghost" href="../README.md">Read docs</a>
-          <a class="button" href="../configs/default.json">View config</a>
-        </div>
+      <header class="site-nav" aria-label="Site navigation">
+        <a class="brand" href="#">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>rv32i-ooo-simulator</span>
+        </a>
+        <nav class="site-nav__links" aria-label="Project links">
+          <a href="https://github.com/bibhuti-ssh/rv32i-ooo-simulator">GitHub</a>
+          <a href="https://github.com/bibhuti-ssh/rv32i-ooo-simulator/blob/main/README.md">Docs</a>
+          <a href="https://github.com/bibhuti-ssh/rv32i-ooo-simulator/blob/main/configs/default.json">Config</a>
+        </nav>
       </header>
 
-      <section class="workbench" aria-label="Interactive simulator showcase">
-        <aside class="control-panel" aria-label="Demo controls">
-          <div class="panel-heading">
-            <span class="status-dot" aria-hidden="true"></span>
-            <span>Demo run controls</span>
+      <section class="hero" aria-label="Simulator overview">
+        <div class="hero__copy">
+          <p class="eyebrow">Cycle-accurate RV32I out-of-order CPU simulator</p>
+          <h1>Watch a tiny superscalar core think.</h1>
+          <p class="lede">
+            A from-scratch C++ simulator with register renaming, a physical register file,
+            ROB commit, issue queues, branch prediction, and configurable L1/L2 cache timing.
+          </p>
+          <div class="hero__actions">
+            <a class="button" href="https://github.com/bibhuti-ssh/rv32i-ooo-simulator">View source</a>
+            <a class="button button--ghost" href="#lab">Open live demo</a>
           </div>
+        </div>
 
+        <div class="hero__spec" aria-label="Simulator capabilities">
+          <div>
+            <span>ISA</span>
+            <strong>RV32I</strong>
+          </div>
+          <div>
+            <span>Core</span>
+            <strong>OoO</strong>
+          </div>
+          <div>
+            <span>Stats</span>
+            <strong>JSON</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo-intro" aria-label="Demo introduction">
+        <p>Interactive showcase</p>
+        <h2>Change the workload and watch the machine-level pressure move.</h2>
+      </section>
+
+      <section class="workbench" id="lab" aria-label="Interactive simulator showcase">
+        <aside class="control-panel" aria-label="Demo controls">
           <label class="field" for="workload">
             <span>Workload</span>
             <select id="workload">
@@ -42,6 +73,8 @@
               <option value="bimodal">Bimodal plus BTB</option>
             </select>
           </label>
+
+          <div class="control-panel__divider"></div>
 
           <div class="segmented" role="group" aria-label="Core size preset">
             <button type="button" class="segment is-active" data-core="balanced">Balanced</button>
@@ -67,12 +100,18 @@
         </aside>
 
         <section class="dashboard" aria-label="Simulation results">
-          <div class="hero-visual">
-            <canvas id="pipelineCanvas" width="1200" height="360" aria-label="Animated pipeline diagram"></canvas>
-            <div class="run-label">
-              <span id="runName">arithmetic.elf</span>
-              <strong id="runStatus">halted with exit code 0</strong>
+          <div class="pipeline-panel">
+            <div class="panel-title panel-title--overlay">
+              <div>
+                <span>Cycle view</span>
+                <h2>Pipeline flow</h2>
+              </div>
+              <div class="run-label">
+                <span id="runName">arithmetic.elf</span>
+                <strong id="runStatus">halted with exit code 0</strong>
+              </div>
             </div>
+            <canvas id="pipelineCanvas" width="1200" height="360" aria-label="Animated pipeline diagram"></canvas>
           </div>
 
           <section class="metrics" aria-label="Topline metrics">
