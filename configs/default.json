@@ -1,0 +1,48 @@
+{
+  "core": {
+    "fetchWidth": 4,
+    "decodeWidth": 4,
+    "renameWidth": 4,
+    "issueWidth": 4,
+    "commitWidth": 4,
+    "robEntries": 64,
+    "issueQueueEntries": 32,
+    "physicalRegisters": 96,
+    "aluUnits": 2,
+    "branchUnits": 1,
+    "loadStoreUnits": 1,
+    "aluLatency": 1,
+    "branchLatency": 1,
+    "loadStoreBaseLatency": 1,
+    "maxCycles": 1000000,
+    "trace": true
+  },
+  "branchPredictor": {
+    "mode": "gshare",
+    "historyBits": 8,
+    "bimodalEntries": 1024,
+    "btbEntries": 256,
+    "btbAssociativity": 4
+  },
+  "l1i": {
+    "sizeBytes": 16384,
+    "lineBytes": 64,
+    "associativity": 4,
+    "latency": 1,
+    "replacement": "LRU"
+  },
+  "l1d": {
+    "sizeBytes": 16384,
+    "lineBytes": 64,
+    "associativity": 4,
+    "latency": 2,
+    "replacement": "LRU"
+  },
+  "l2": {
+    "sizeBytes": 262144,
+    "lineBytes": 64,
+    "associativity": 8,
+    "latency": 12,
+    "replacement": "PLRU"
+  }
+}

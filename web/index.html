@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RV32I OoO Simulator Showcase</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar" aria-label="Simulator overview">
+        <div>
+          <p class="eyebrow">RV32I out-of-order simulator</p>
+          <h1>Cycle-accurate CPU lab</h1>
+        </div>
+        <div class="topbar__actions">
+          <a class="button button--ghost" href="../README.md">Read docs</a>
+          <a class="button" href="../configs/default.json">View config</a>
+        </div>
+      </header>
+
+      <section class="workbench" aria-label="Interactive simulator showcase">
+        <aside class="control-panel" aria-label="Demo controls">
+          <div class="panel-heading">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Demo run controls</span>
+          </div>
+
+          <label class="field" for="workload">
+            <span>Workload</span>
+            <select id="workload">
+              <option value="arithmetic">Arithmetic dependency loop</option>
+              <option value="branch">Alternating branch pattern</option>
+              <option value="cache">Stride cache stress</option>
+            </select>
+          </label>
+
+          <label class="field" for="predictor">
+            <span>Branch predictor</span>
+            <select id="predictor">
+              <option value="gshare">Gshare plus BTB</option>
+              <option value="bimodal">Bimodal plus BTB</option>
+            </select>
+          </label>
+
+          <div class="segmented" role="group" aria-label="Core size preset">
+            <button type="button" class="segment is-active" data-core="balanced">Balanced</button>
+            <button type="button" class="segment" data-core="wide">Wide</button>
+            <button type="button" class="segment" data-core="tiny">Tiny</button>
+          </div>
+
+          <label class="range" for="rob">
+            <span>ROB entries <strong id="robValue">64</strong></span>
+            <input id="rob" type="range" min="24" max="128" step="8" value="64">
+          </label>
+
+          <label class="range" for="cache">
+            <span>L1 data cache <strong id="cacheValue">16 KB</strong></span>
+            <input id="cache" type="range" min="4" max="64" step="4" value="16">
+          </label>
+
+          <div class="command-box">
+            <span>CLI equivalent</span>
+            <code id="cliCommand">./sim --program workloads/arithmetic.elf --config configs/default.json --stats out.json</code>
+            <button type="button" class="button button--ghost" id="copyCommand">Copy command</button>
+          </div>
+        </aside>
+
+        <section class="dashboard" aria-label="Simulation results">
+          <div class="hero-visual">
+            <canvas id="pipelineCanvas" width="1200" height="360" aria-label="Animated pipeline diagram"></canvas>
+            <div class="run-label">
+              <span id="runName">arithmetic.elf</span>
+              <strong id="runStatus">halted with exit code 0</strong>
+            </div>
+          </div>
+
+          <section class="metrics" aria-label="Topline metrics">
+            <article class="metric">
+              <span>IPC</span>
+              <strong id="ipcMetric">1.41</strong>
+              <small id="cycleMetric">2112 cycles</small>
+            </article>
+            <article class="metric">
+              <span>Branch miss</span>
+              <strong id="branchMetric">3.8%</strong>
+              <small id="branchCountMetric">42 misses</small>
+            </article>
+            <article class="metric">
+              <span>L1D hit rate</span>
+              <strong id="l1dMetric">96.4%</strong>
+              <small id="l2Metric">L2 hit 72.1%</small>
+            </article>
+            <article class="metric">
+              <span>ROB avg</span>
+              <strong id="robMetric">37.4</strong>
+              <small id="rsMetric">RS avg 16.2</small>
+            </article>
+          </section>
+
+          <section class="analysis-grid">
+            <article class="analysis-panel">
+              <div class="panel-title">
+                <h2>Cache hierarchy</h2>
+                <button type="button" class="icon-button" id="downloadStats" aria-label="Download sample stats JSON">JSON</button>
+              </div>
+              <canvas id="cacheChart" width="720" height="340" aria-label="Cache hit rate chart"></canvas>
+            </article>
+
+            <article class="analysis-panel">
+              <div class="panel-title">
+                <h2>Occupancy profile</h2>
+                <span id="pressureLabel">balanced pressure</span>
+              </div>
+              <canvas id="occupancyChart" width="720" height="340" aria-label="ROB and reservation station occupancy chart"></canvas>
+            </article>
+          </section>
+
+          <section class="trace-panel" aria-label="Per-instruction trace">
+            <div class="panel-title">
+              <h2>Instruction timeline</h2>
+              <span>fetch / rename / issue / execute / commit</span>
+            </div>
+            <div class="trace-table" id="traceTable"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

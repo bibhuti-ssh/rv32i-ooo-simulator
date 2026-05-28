@@ -1,0 +1,9 @@
+sim
+unit_tests
+stats.json
+out.json
+tests/minimal_test.elf
+workloads/*.elf
+workloads/*.o
+*.o
+.DS_Store
